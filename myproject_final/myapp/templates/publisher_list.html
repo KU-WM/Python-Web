@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Publisher List</title>
+</head>
+<body>
+    <h1>📚 Publisher List</h1>
+    <a href="{% url 'create_publisher' %}">➕ Add a New Publisher</a>
+    <br><br>
+    <ul>
+        {% for publisher in publishers %}
+            <li>
+                <strong>{{ publisher.name }}</strong> (Est. {{ publisher.established_date }})
+                <a href="{% url 'update_publisher' publisher.id %}">✏ Edit</a> | 
+                <a href="{% url 'delete_publisher' publisher.id %}">🗑 Delete</a>
+            </li>
+        {% empty %}
+            <li>No publishers available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
