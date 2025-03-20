@@ -45,7 +45,7 @@ for page in range(1, 2):
             company_name = ""
 
         try:
-            job_notice_title = driver.find_element(By.XPATH, '//*[@id="container"]/section/div[1]/article/div[1]/h3/text()')
+            job_notice_title = driver.find_element(By.XPATH, '//*[@id="container"]/section/div[1]/article/div[1]/h3/text()').text
         except:
             job_notice_title = ""
 
