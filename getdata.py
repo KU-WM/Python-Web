@@ -45,7 +45,8 @@ for page in range(1, 2):
             company_name = ""
 
         try:
-            job_notice_title = driver.find_element(By.XPATH, '//*[@id="container"]/section/div[1]/article/div[1]/h3/text()').text
+            job_notice_title = driver.find_element(By.XPATH, '/html/body/div[5]/section/section/div[1]/article/div[1]/h3').text
+            job_notice_title = job_notice_title.split("\n")[-1]
         except:
             job_notice_title = ""
 
@@ -78,6 +79,8 @@ for page in range(1, 2):
 
         print(f"Page {page} - company {i} is finished!")
 
+driver.close()
+print("All Works are Finished!")
 
 df = pd.DataFrame(data)
 df.to_csv("test.csv")
