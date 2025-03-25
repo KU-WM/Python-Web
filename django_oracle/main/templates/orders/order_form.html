@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>주문 추가</title>
+    </head>
+    <body>
+        <h1>신규 주문 추가</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">주문 완료</button>
+        </form>
+        <a href="{% url 'order_list' %}">← 주문 목록</a>
+    </body>
+</html>
