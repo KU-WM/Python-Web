@@ -1,0 +1,10 @@
+{% if parent.children.all %}
+    <ul>
+        {% for child in parent.children.all %}
+            <li class=level-{{child.level}}>
+                {{ child.name }}
+                {% include "org_chart/child_departments.html" with parent=child %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

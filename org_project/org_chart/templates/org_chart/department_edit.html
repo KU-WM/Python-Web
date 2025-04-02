@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부서명 수정</title>
+    <script>
+        def closeAndRefreshParent() {
+            if(window.opener) {
+                window.opener.location.reload(); // 부모 창 새로고침
+            }
+            window.close(); // 현재 창 닫기
+        }
+    </script>
+</head>
+<body>
+    <h2>부서(팀)명 수정</h2>
+
+    <form action="POST">
+        {% csrf_token %}
+        <input type="hidden", name='dept_id', value="{{ dept_id }}"> 
+        <label>새 이름: </label>
+        <input type="text" name='new_name'  value="{{ dept_name }}">
+        <button type='summit'>저장</button>
+        <a href="#" onclick='closeAndRefreshParent(); return false'></a>
+    </form>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>조직도</title>
+    <style>
+        
+        ul{list-style-type: none;}
+        
+        li {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .level-1 {
+            font-size: 30px;
+        }
+
+        .level-2{
+            font-size: 25px
+        }
+
+        .level-3{
+            font-size: 20px
+        }
+
+    </style>
+</head>
+<body>
+    <h1>조직도</h1>
+    <hr>
+
+    {% for dept in departments %}
+        <ul>
+            <li class=level-1>
+                <strong>{{ dept.name }}</strong>
+                {% include 'org_chart/child_departments.html' with parent=dept %}
+            </li>
+        </ul>
+    {% endfor %}
+</body>
+</html>
