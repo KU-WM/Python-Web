@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>급여 목록</title>
+</head>
+<body>
+    <ul>
+        {% for employee in employees %}
+            <li>
+                <Strong>{{ employee.firstName }}</Strong><br>
+                이메일: {{ employee.email }}<br>
+                부서: {{ employee.departmentId }}<br>
+                현재급여: {{employee.salary}}<br>
+
+                <a href="{% url 'updateSalary' employee.id %}">급여 수정</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

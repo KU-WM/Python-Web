@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>급여 변경</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  {% comment %} <script src='/static/js/temp.js'></script> {% endcomment %}
+</head>
+<body class="container py-5">
+
+    <h2 class="mb-4">💼 직원 급여 변경</h2>
+
+    <form id="salaryForm" method="POST">
+        <!-- CSRF 토큰은 Django에서 자동 삽입됨 -->
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">부서</label><br>
+            <input type="text" id="department" value='{{ data.departmentId }}' class="form-control" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">직원</label><br>
+            <input type="text" id="name" value='{{ data.firstName }}' class="form-control" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">현재 급여</label><br>
+            <input type="text" id="oldSalary" value='{{ data.salary }}' class="form-control" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">변경할 급여</label>
+            <input type="number" id="salary" name="new_salary" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">변경자</label>
+            <input type="text" id="admin" name="admin" class="form-control">
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick='checkAndSubmit()'>급여 변경</button>
+    </form>
+
+  <script>
+    function checkAndSubmit() {
+      const newSalary = parseInt(document.getElementById('salary').value);
+      const oldSalary = parseInt(document.getElementById('oldSalary').value);
+      const currentName = document.getElementById('name').value
+      
+      if (isNaN(newSalary)) {
+        alert("변경할 급여를 입력하세요.");
+        return;
+      }
+
+      if (newSalary < oldSalary) {
+        if (!confirm("현재 금액보다 작은데 진행할까요?")) return;
+      }
+
+      if (confirm(`${currentName}님 급여를 ${oldSalary} => ${newSalary} 로 변경합니다!!`)) {
+        const form = document.getElementById('salaryForm');
+        const id = document.createElement('input')
+        id.value = {{ data.id }}
+        id.id = 'id'
+        id.name = 'id'
+        
+        form.appendChild(id)
+
+        document.getElementById('salaryForm').submit();
+      }
+    }
+  </script>
+</body>
+</html>
