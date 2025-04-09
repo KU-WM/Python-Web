@@ -1,5 +1,5 @@
 from django import forms
-from .models import Department, Employee, SalaryHistory
+from .models import Department, Employee, SalaryHistory, SalaryHistorys
 
 class DepartmentFrom(forms.ModelForm):
     class Meta:
@@ -15,3 +15,8 @@ class SalaryHistoryForm(forms.ModelForm):
     class Meta:
         model=SalaryHistory
         fields = ['employeeId','salary', 'changedBy']
+        
+class SalaryHistorysForm(forms.ModelForm):
+    class Meta:
+        model=SalaryHistorys
+        fields = ['employee','new_salary', 'changed_by']

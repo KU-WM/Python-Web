@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .models import Department, Employee, SalaryHistory
 from .models import Departments, Employees, SalaryHistorys
-from .forms import DepartmentFrom, EmployeeForm, SalaryHistoryForm
+from .forms import DepartmentFrom, EmployeeForm, SalaryHistoryForm, SalaryHistorysForm
 from django.db import connection, transaction
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
@@ -14,7 +14,7 @@ def employeeList(request):
 
 @csrf_exempt
 def updateSalary(request, id):
-    data = Employee.objects.get(id = id)
+    data = Employees.objects.get(emp_id = id)
     if request.method == 'POST':
         with connection.cursor() as cursor:
             query = 'BEGIN proc_update_salary( p_emp_id => ' \
@@ -23,12 +23,12 @@ def updateSalary(request, id):
                     + repr(request.POST.get('admin')) + '); END;/'
             cursor.execute(query)
         
-        data = SalaryHistory.objects.filter(employeeId = request.POST.get('id'))
-        form = Employee.objects.get(id = request.POST.get('id'))
-        return render(request, 'salary_complete.html', {'form': form, 'datas':data})
+        data = SalaryHistorys.objects.filter(employee = request.POST.get('id'))
+        form = Employees.objects.get(emp_id = request.POST.get('id'))
+        return render(request, 'salary_complete2.html', {'emp': form, 'history':data})
         
     else:
-        form = SalaryHistoryForm(instance=SalaryHistory)
+        form = SalaryHistorysForm(instance=SalaryHistorys)
     
     return render(request, 'salary_update.html', {'form': form, 'data': data})
 
@@ -99,6 +99,11 @@ def salary_complete(request, emp_id):
     emp = Employees.objects.get(emp_id=emp_id)
     history = SalaryHistorys.objects.filter(employee=emp).order_by('-changed_at')
     return render(request, 'salary_complete2.html', {'emp':emp, 'history':history})
+
+def salary_his_list(request, emp_id):
+    emp = Employees.objects.get(emp_id=emp_id)
+    history = SalaryHistorys.objects.filter(employee=emp).order_by('-changed_at')
+    return render(request, 'salary_history.html', {'emp':emp, 'history':history})
 
 def get_nextval(sequence_name):
     with connection.cursor() as cursor:

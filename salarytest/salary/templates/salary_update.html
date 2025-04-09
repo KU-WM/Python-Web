@@ -17,12 +17,12 @@
 
         <div class="mb-3">
             <label class="form-label">부서</label><br>
-            <input type="text" id="department" value='{{ data.departmentId }}' class="form-control" readonly>
+            <input type="text" id="department" value='{{ data.department }}' class="form-control" readonly>
         </div>
 
         <div class="mb-3">
             <label class="form-label">직원</label><br>
-            <input type="text" id="name" value='{{ data.firstName }}' class="form-control" readonly>
+            <input type="text" id="name" value='{{ data.first_name }}' class="form-control" readonly>
         </div>
 
         <div class="mb-3">
@@ -61,7 +61,7 @@
       if (confirm(`${currentName}님 급여를 ${oldSalary} => ${newSalary} 로 변경합니다!!`)) {
         const form = document.getElementById('salaryForm');
         const id = document.createElement('input')
-        id.value = {{ data.id }}
+        id.value = {{ data.emp_id }}
         id.id = 'id'
         id.name = 'id'
         
